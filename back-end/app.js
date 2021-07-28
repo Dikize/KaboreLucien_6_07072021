@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const helmet = require('helmet');
 require('dotenv').config({
     path: '.env'
 });
@@ -26,6 +27,9 @@ app.use((req, res, next) => {
     next();
 });
 
+
+// helmet protection contre les attaques de type cross-site scripting
+app.use(helmet());
 
 // Enregistrement des routeurs
 app.use(express.json());

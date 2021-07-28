@@ -4,14 +4,16 @@ const buffer = require('buffer');
 
 const User = require('../models/User');
 
-// Logiques métiers pour les utilisateurs
+// Masquage de l'adresse mail
+let emailInbase64 = buffer.toString('base64');
+
+
 // Création de nouveaux utilisateurs (Post signup)
 exports.signup = (req, res, next) => {
+
     // Hash du mot de passe avec bcrypt
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
-            // Masquage de l'adresse mail
-            let emailInbase64 = buffer.toString('base64');
 
             // Création du nouvel utilisateur
             const user = new User({
@@ -34,8 +36,6 @@ exports.signup = (req, res, next) => {
 
 // Création de connexion d'utilisateur enregistré (Post login)
 exports.login = (req, res, next) => {
-    // Masquage de l'adresse mail
-    let emailInbase64 = buffer.toString('base64');
 
     // Recherche d'un utilisateur dans la base de données
     User.findOne({
