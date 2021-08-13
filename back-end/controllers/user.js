@@ -1,12 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const buffer = require('buffer');
+const maskemail = require("maskemail");
 
 const User = require('../models/User');
-
-// Masquage de l'adresse mail
-let emailInbase64 = buffer.toString('base64');
-
 
 // Création de nouveaux utilisateurs (Post signup)
 exports.signup = (req, res, next) => {
@@ -17,7 +13,7 @@ exports.signup = (req, res, next) => {
 
             // Création du nouvel utilisateur
             const user = new User({
-                email: emailInbase64,
+                email: maskemail(req.body.email, { allowed: /@\.-/ }),
                 password: hash
             })
             // Sauvegarde dans la base de données
@@ -39,7 +35,7 @@ exports.login = (req, res, next) => {
 
     // Recherche d'un utilisateur dans la base de données
     User.findOne({
-            email: emailInbase64
+            email: maskemail(req.body.email)
         })
         .then(user => {
             // Si on ne trouve pas l'utilisateur
@@ -62,7 +58,7 @@ exports.login = (req, res, next) => {
                         token: jwt.sign({
                                 userId: user._id
                             },
-                            'RANDOM_TOKEN_SECRET', {
+                            process.env.SECRET_TOKEN, {
                                 expiresIn: '24h'
                             }
                         )

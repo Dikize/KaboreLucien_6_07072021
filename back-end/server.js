@@ -9,9 +9,11 @@ const normalizePort = val => {
     if (isNaN(port)) {
         return val;
     }
+    // si la valeur de la constante "port" est supérieur ou égale à zéro de donc valide: la fonction renvoie la consante port
     if (port >= 0) {
         return port;
     }
+    // sinon (port<0) la fonction renvoie alors false
     return false;
 };
 const port = normalizePort(process.env.PORT || '3000');

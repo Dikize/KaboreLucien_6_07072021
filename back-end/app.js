@@ -18,6 +18,8 @@ mongoose.connect(process.env.MONGODB, {
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch((err) => console.log('Connexion à MongoDB échouée !', err));
 
+// helmet protection contre les attaques de type cross-site scripting
+app.use(helmet());
 
 // Définition de headers pour éviters les erreurs de CORS
 app.use((req, res, next) => {
@@ -27,9 +29,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
-// helmet protection contre les attaques de type cross-site scripting
-app.use(helmet());
 
 // Enregistrement des routeurs
 app.use(express.json());
