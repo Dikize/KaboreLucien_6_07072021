@@ -9,7 +9,7 @@ const normalizePort = val => {
     if (isNaN(port)) {
         return val;
     }
-    // si la valeur de la constante "port" est supérieur ou égale à zéro de donc valide: la fonction renvoie la consante port
+    // si la valeur de la constante "port" est supérieur ou égale à zéro donc valide: la fonction renvoie la consante port
     if (port >= 0) {
         return port;
     }
